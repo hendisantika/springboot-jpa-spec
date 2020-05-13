@@ -33,4 +33,14 @@ public class MemberSpecification extends BaseSpecification<Member, FilterRequest
         };
     }
 
+    public Specification<Member> hasString(String searchString) {
+        return (root, query, cb) -> {
+            query.distinct(true);
+            if (searchString != null) {
+                return cb.like(cb.lower(root.get("interests")), cb.lower(cb.literal("%" + searchString + "%")));
+            } else {
+                return null;
+            }
+        };
+    }
 }
