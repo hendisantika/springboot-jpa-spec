@@ -1,10 +1,14 @@
 package com.hendisantika.springbootjpaspec.service;
 
+import com.hendisantika.springbootjpaspec.domain.Member;
 import com.hendisantika.springbootjpaspec.repository.MemberRepository;
+import com.hendisantika.springbootjpaspec.spesification.FilterRequest;
 import com.hendisantika.springbootjpaspec.spesification.MemberSpecification;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
