@@ -4,8 +4,10 @@ import com.hendisantika.springbootjpaspec.domain.Class;
 import com.hendisantika.springbootjpaspec.domain.Member;
 import com.hendisantika.springbootjpaspec.repository.ClassRepository;
 import com.hendisantika.springbootjpaspec.repository.MemberRepository;
+import com.hendisantika.springbootjpaspec.spesification.FilterRequest;
 import com.hendisantika.springbootjpaspec.spesification.MemberSpecification;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,12 +15,15 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(properties = "spring.main.banner-mode=off")
 @Transactional
-class SpringbootJpaSpecApplicationTests {
+public class SpringbootJpaSpecApplicationTests {
 
     @Autowired
     private ClassRepository classRepository;
@@ -93,5 +98,14 @@ class SpringbootJpaSpecApplicationTests {
         memberRepository.save(memberAlice);
     }
 
+    @Test
+    public void testMembersActive() {
+        FilterRequest filter = new FilterRequest();
+        filter.setActive(true);
+
+        List<Member> memberList = memberRepository.findAll(memberSpecification.getFilter(filter));
+
+        assertEquals(2, memberList.size());
+    }
 
 }

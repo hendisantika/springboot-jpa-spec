@@ -1,5 +1,6 @@
 package com.hendisantika.springbootjpaspec.spesification;
 
+import com.hendisantika.springbootjpaspec.domain.Class;
 import com.hendisantika.springbootjpaspec.domain.Member;
 import com.hendisantika.springbootjpaspec.repository.ClassRepository;
 import org.springframework.beans.factory.annotation.Autowired;
