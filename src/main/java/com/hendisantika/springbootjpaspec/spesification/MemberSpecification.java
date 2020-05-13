@@ -5,6 +5,14 @@ import com.hendisantika.springbootjpaspec.repository.ClassRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
+
+import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.SetJoin;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 import static org.springframework.data.jpa.domain.Specification.where;
 
@@ -41,6 +49,25 @@ public class MemberSpecification extends BaseSpecification<Member, FilterRequest
             } else {
                 return null;
             }
+        };
+    }
+
+    public Specification<Member> hasClasses(String searchString) {
+        return (root, query, cb) -> {
+            query.distinct(true);
+            if (searchString != null) {
+                List<Class> classes = classRepository.findAllByNameContainsIgnoreCase(searchString);
+
+                if (!CollectionUtils.isEmpty(classes)) {
+                    SetJoin<Member, Class> masterClassJoin = root.joinSet("classes", JoinType.LEFT);
+                    List<Predicate> predicates = new ArrayList<>();
+                    predicates.add(masterClassJoin.in(new HashSet<>(classes)));
+                    Predicate[] p = predicates.toArray(new Predicate[predicates.size()]);
+                    return cb.or(p);
+                }
+            }
+
+            return null;
         };
     }
 }
