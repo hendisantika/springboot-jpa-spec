@@ -70,4 +70,14 @@ public class MemberSpecification extends BaseSpecification<Member, FilterRequest
             return null;
         };
     }
+
+    private Specification<Member> isActive(Boolean isActive) {
+        return (root, query, cb) -> {
+            if (isActive != null) {
+                return cb.equal(root.get("active"), isActive);
+            } else {
+                return null;
+            }
+        };
+    }
 }
