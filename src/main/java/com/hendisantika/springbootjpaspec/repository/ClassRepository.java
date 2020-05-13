@@ -1,5 +1,6 @@
 package com.hendisantika.springbootjpaspec.repository;
 
+import com.hendisantika.springbootjpaspec.domain.Class;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
