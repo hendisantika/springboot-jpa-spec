@@ -80,4 +80,14 @@ public class MemberSpecification extends BaseSpecification<Member, FilterRequest
             }
         };
     }
+
+    private Specification<Member> inZipCode(String zipFilter) {
+        return (root, query, cb) -> {
+            if (zipFilter != null) {
+                return cb.like(root.get("zipCode"), cb.literal(zipFilter + "%"));
+            } else {
+                return null;
+            }
+        };
+    }
 }
