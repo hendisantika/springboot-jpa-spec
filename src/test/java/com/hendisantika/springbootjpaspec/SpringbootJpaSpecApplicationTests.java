@@ -125,8 +125,23 @@ public class SpringbootJpaSpecApplicationTests {
 
         List<Member> memberList =
                 memberRepository.findAll(Specification.where(memberSpecification.hasString(searchString)
-                .or(memberSpecification.hasClasses(searchString))));
+                        .or(memberSpecification.hasClasses(searchString))));
 
         assertEquals(3, memberList.size());
+    }
+
+    @Test
+    public void testMembersActiveInZip902WithSwimClassOrInterest() {
+        FilterRequest filter = new FilterRequest();
+        filter.setActive(true);
+        filter.setZipFilter("902");
+        String searchString = "sWIM";
+
+        List<Member> memberList =
+                memberRepository.findAll(Specification.where(memberSpecification.hasString(searchString)
+                .or(memberSpecification.hasClasses(searchString)))
+                .and(memberSpecification.getFilter(filter)));
+
+        assertEquals(2, memberList.size());
     }
 }
