@@ -108,4 +108,14 @@ public class SpringbootJpaSpecApplicationTests {
         assertEquals(2, memberList.size());
     }
 
+    @Test
+    public void testMembersInZip902() {
+        FilterRequest filter = new FilterRequest();
+        filter.setZipFilter("902");
+
+        List<Member> memberList = memberRepository.findAll(memberSpecification.getFilter(filter));
+
+        assertEquals(3, memberList.size());
+    }
+
 }
